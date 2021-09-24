@@ -32,12 +32,13 @@
   "scripts": {
     "docs": "node docs/compile",
     "test": "nyc mocha --expose-gc",
-    "install": "node-gyp-build",
-    "prebuild": "prebuildify --napi --tag-armv",
-    "prepack": "prebuildify-ci download && ([ $(ls prebuilds | wc -l) = '5' ] || (echo 'Some prebuilds are missing'; exit 1))"
+    "install": "node-gyp rebuild"
   },
   "dependencies": {
-    "debug": "^4.3.1"
+    "debug": "^4.3.1",
+    "node-addon-api": "^4.2.0",
+    "node-gyp-build": "^4.3.0",
+    "get-symbol-from-current-process-h": "^1.0.2"
   },
   "devDependencies": {
     "dox": "0.9.0",
