@@ -60,6 +60,8 @@ class PointerBuffer : public ObjectWrap<PointerBuffer> {
   Napi::Value Length(const Napi::CallbackInfo &info);
   Napi::Value Get(const Napi::CallbackInfo &info);
   Napi::Value ToString(const Napi::CallbackInfo &info);
+  Napi::Value Copy(const Napi::CallbackInfo &info);
+  Napi::Value Slice(const Napi::CallbackInfo &info);
   char *ptr_;
   int length_;
 };
@@ -71,6 +73,8 @@ Object PointerBuffer::Init(Napi::Env env, Object exports) {
            InstanceMethod("get", &PointerBuffer::Get),
            InstanceMethod("address", &PointerBuffer::Address),
            InstanceMethod("toString", &PointerBuffer::ToString),
+           InstanceMethod("copy", &PointerBuffer::Copy),
+           InstanceMethod("slice", &PointerBuffer::Slice),
            InstanceAccessor<&PointerBuffer::Length>("length"),
       });
 
@@ -109,7 +113,6 @@ Napi::Value PointerBuffer::Get(const Napi::CallbackInfo &info) {
   return Number::New(info.Env(), ptr_[offset]);
 }
 
-
 Napi::Value PointerBuffer::ToString(const Napi::CallbackInfo &info) {
   Napi::Env env = info.Env();
   int length = info.Length();
@@ -125,6 +128,24 @@ Napi::Value PointerBuffer::ToString(const Napi::CallbackInfo &info) {
   }
 
   return String::New(info.Env(), ptr_, length_);
+}
+
+char* GetBufferData(Value val);
+
+Napi::Value PointerBuffer::Copy(const Napi::CallbackInfo &info) {
+  char* dest =
+      ::GetBufferData(info[0]) + info[1].As<Napi::Number>().Int64Value();
+  uint64_t length =
+      info[3].As<Number>().Int64Value() - info[2].As<Number>().Int64Value();
+  std::memcpy(dest, ptr_, length);
+  return Number::New(info.Env(), length);
+}
+
+Value WrapPointer(Env env, char* ptr, size_t length);
+
+Napi::Value PointerBuffer::Slice(const Napi::CallbackInfo &info) {
+  int64_t offset = info[0].As<Napi::Number>().Int64Value();
+  return ::WrapPointer(info.Env(), ptr_ + offset, length_ - offset);
 }
 
 /**
@@ -467,6 +488,56 @@ void WriteInt32(const CallbackInfo& args) {
   *reinterpret_cast<int32_t*>(ptr) = (int32_t)val;
 }
 
+Value ReadUInt32(const CallbackInfo& args) {
+  Env env = args.Env();
+  char* p = AddressForArgs(args);
+  uint32_t val = *reinterpret_cast<uint32_t*>(p);
+  return Number::New(env, val);
+}
+
+
+Value ReadInt8(const CallbackInfo& args) {
+  Env env = args.Env();
+  char* p = AddressForArgs(args);
+  int8_t val = *reinterpret_cast<int8_t*>(p);
+  return Number::New(env, val);
+}
+
+Value ReadUInt8(const CallbackInfo& args) {
+  Env env = args.Env();
+  char* p = AddressForArgs(args);
+  uint8_t val = *reinterpret_cast<uint8_t*>(p);
+  return Number::New(env, val);
+}
+
+Value ReadFloat(const CallbackInfo& args) {
+  Env env = args.Env();
+  char* p = AddressForArgs(args);
+  float val = *reinterpret_cast<float*>(p);
+  return Number::New(env, val);
+}
+
+Value ReadDouble(const CallbackInfo& args) {
+  Env env = args.Env();
+  char* p = AddressForArgs(args);
+  double val = *reinterpret_cast<double*>(p);
+  return Number::New(env, val);
+}
+
+Value ReadInt16(const CallbackInfo& args) {
+  Env env = args.Env();
+  char* p = AddressForArgs(args);
+  int16_t val = *reinterpret_cast<int16_t*>(p);
+  return Number::New(env, val);
+}
+
+Value ReadUInt16(const CallbackInfo& args) {
+  Env env = args.Env();
+  char* p = AddressForArgs(args);
+  uint16_t val = *reinterpret_cast<uint16_t*>(p);
+  return Number::New(env, val);
+}
+
 /**
  * Reads a machine-endian uint64_t from the given Buffer at the given offset.
  *
@@ -710,6 +781,14 @@ Object Init(Env env, Object exports) {
 
   exports["readInt32"] = Function::New(env, ReadInt32);
   exports["writeInt32"] = Function::New(env, WriteInt32);
+
+  exports["readUInt32"] = Function::New(env, ReadUInt32);
+  exports["readInt8"] = Function::New(env, ReadInt8);
+  exports["readUInt8"] = Function::New(env, ReadUInt8);
+  exports["readFloat"] = Function::New(env, ReadFloat);
+  exports["readDouble"] = Function::New(env, ReadDouble);
+  exports["readInt16"] = Function::New(env, ReadInt16);
+  exports["readUInt16"] = Function::New(env, ReadUInt16);
 
   exports["readCString"] = Function::New(env, ReadCString);
   exports["_reinterpret"] = Function::New(env, ReinterpretBuffer);
