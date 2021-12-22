@@ -1,5 +1,8 @@
 ref-napi
 ========
+*THIS PACKAGE WAS FORKED FROM http://github.com/node-ffi-napi/ref-napi AND UPDATED TO 
+ENABLE rclnodejs TO RUN UNDER NODE VERSIONS 12-16. NO TESTING BEYOND the rclnodejs TEST SUITE
+HAS BEEN PERFORMED. USE AT YOUR OWN DISCRETION.*
 ### Turn Buffer instances into "pointers"
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/node-ffi-napi/ref-napi.svg)](https://greenkeeper.io/)
