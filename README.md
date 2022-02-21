@@ -3,7 +3,8 @@ ref-napi
 
 Fork of [node-ffi-napi/ref-napi](https://github.com/node-ffi-napi/ref-napi). Changes:
 * Include changes from [minggangw/ref-napi](https://github.com/minggangw/ref-napi) to fix stacktraces on node v16
-* Bundle types
+* Bundle types along with `@types/node` dependency
+* Remove several devDependencies that were also dependencies
 * Sort dependencies
 
 ### Turn Buffer instances into "pointers"
