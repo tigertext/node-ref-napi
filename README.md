@@ -1,8 +1,10 @@
 ref-napi
 ========
-*THIS PACKAGE WAS FORKED FROM http://github.com/node-ffi-napi/ref-napi AND UPDATED TO 
-ENABLE rclnodejs TO RUN UNDER NODE VERSIONS 12-16. NO TESTING BEYOND the rclnodejs TEST SUITE
-HAS BEEN PERFORMED. USE AT YOUR OWN DISCRETION.*
+
+Fork of [node-ffi-napi/ref-napi](https://github.com/node-ffi-napi/ref-napi). Changes:
+* Include changes from [minggangw/ref-napi](https://github.com/minggangw/ref-napi) to fix stacktraces on node v16
+* Bundle types
+
 ### Turn Buffer instances into "pointers"
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/node-ffi-napi/ref-napi.svg)](https://greenkeeper.io/)
@@ -36,7 +38,7 @@ Installation
 Install with `npm`:
 
 ``` bash
-$ npm install ref-napi
+$ npm install @tigerconnect/ref-napi
 ```
 
 
@@ -46,7 +48,7 @@ Examples
 #### referencing and derefencing
 
 ``` js
-var ref = require('ref-napi')
+var ref = require('@tigerconnect/ref-napi')
 
 // so we can all agree that a buffer with the int value written
 // to it could be represented as an "int *"
@@ -98,7 +100,7 @@ For example, you could define a "bigint" type that dereferences into a
 [`bigint`](https://github.com/substack/node-bigint) instance:
 
 ``` js
-var ref = require('ref-napi')
+var ref = require('@tigerconnect/ref-napi')
 var bigint = require('bigint')
 
 // define the "type" instance according to the spec

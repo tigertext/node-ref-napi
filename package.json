@@ -1,5 +1,5 @@
 {
-  "name": "@rclnodejs/ref-napi",
+  "name": "@tigerconnect/ref-napi",
   "description": "Turn Buffer instances into \"pointers\"",
   "engines": {
     "node": ">= 10.0"
@@ -21,14 +21,22 @@
     "64",
     "napi"
   ],
-  "version": "4.0.0",
+  "version": "4.0.0-tc0",
   "license": "MIT",
   "author": "Anna Henningsen <anna@addaleax.net>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/rclnodejs/ref-napi.git"
+    "url": "git://github.com/tigertext/ref-napi.git"
   },
   "main": "./lib/ref.js",
+  "types": "./lib/ref.d.ts",
+  "typesVersions": {
+    "<=4.1": {
+      "*": [
+        "ts4.1/*"
+      ]
+    }
+  },
   "scripts": {
     "docs": "node docs/compile",
     "test": "nyc mocha --expose-gc",
