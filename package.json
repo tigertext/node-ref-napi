@@ -55,8 +55,6 @@
     "marked": "^1.0.0",
     "mocha": "^8.4.0",
     "nyc": "^15.0.0",
-    "prebuildify": "^4.1.2",
-    "prebuildify-ci": "^1.0.5",
     "pug": "^3.0.2",
     "weak-napi": "^2.0.0"
   }
