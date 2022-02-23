@@ -40,7 +40,8 @@
   "scripts": {
     "docs": "node docs/compile",
     "test": "nyc mocha --expose-gc",
-    "install": "node-gyp rebuild"
+    "install": "node-gyp rebuild",
+    "prepublishOnly": "node-gyp rebuild"
   },
   "dependencies": {
     "@types/node": "*",
