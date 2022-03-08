@@ -25,6 +25,9 @@ node_js:
   - "14"
   - "16"
 
+python:
+  - "3.9"
+
 jobs:
   include:
       - os: linux
