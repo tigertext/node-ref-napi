@@ -23,6 +23,7 @@ node_js:
   - "10"
   - "12"
   - "14"
+  - "16"
 
 jobs:
   include:
@@ -57,5 +58,5 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    node: 12
+    node: 16
   api_key: $PREBUILD_GITHUB_TOKEN
