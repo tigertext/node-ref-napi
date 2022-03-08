@@ -16,7 +16,6 @@ jobs:
             platform: x86,
             prebuild_arch: ia32,
             prebuild_dir: win32-ia32,
-            node_version: 16,
           },
           {
             os: windows-latest,
@@ -24,9 +23,9 @@ jobs:
             platform: x64,
             prebuild_arch: x64,
             prebuild_dir: win32-x64,
-            node_version: 16,
           },
         ]
+        node_version: [16]
 
     runs-on: ${{ matrix.config.os }}
 
@@ -40,7 +39,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.config.node_version }}
+          node-version: ${{ matrix.node_version }}
 
       - name: Install dependencies (Windows only)
         if: startsWith(matrix.config.os, 'windows')
