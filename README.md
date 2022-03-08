@@ -4,6 +4,7 @@ ref-napi
 Fork of [node-ffi-napi/ref-napi](https://github.com/node-ffi-napi/ref-napi). Changes:
 * Include changes from [minggangw/ref-napi](https://github.com/minggangw/ref-napi) to fix stacktraces on node v16
 * Provide prebuilds using Travis (Mac, Linux) and GitHub Actions (Windows)
+* Add prebuild for OSX on Apple Silicon
 * Bundle types along with `@types/node` dependency
 
 ### Turn Buffer instances into "pointers"
