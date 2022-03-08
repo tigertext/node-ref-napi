@@ -21,7 +21,7 @@
     "64",
     "napi"
   ],
-  "version": "4.0.0-tc7",
+  "version": "4.0.0-tc8",
   "license": "MIT",
   "author": "Anna Henningsen <anna@addaleax.net>",
   "repository": {
@@ -42,7 +42,7 @@
     "test": "nyc mocha --expose-gc",
     "install": "node-gyp-build",
     "prebuild": "prebuildify --napi --tag-armv",
-    "prepack": "prebuildify-ci download && ([ $(ls prebuilds | wc -l) = '5' ] || (echo 'Some prebuilds are missing'; exit 1))"
+    "prepack": "prebuildify-ci download && ([ $(ls prebuilds | wc -l) = '6' ] || (echo 'Some prebuilds are missing'; exit 1))"
   },
   "dependencies": {
     "@types/node": "*",
