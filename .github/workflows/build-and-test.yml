@@ -20,14 +20,10 @@ jobs:
   build-and-test:
     strategy:
       matrix:
-        config: [
-          {
-            os: windows-latest,
-            node_version: [10, 12, 14, 16]
-          },
-        ]
+        os: windows-latest
+        node_version: [10, 12, 14, 16]
 
-    runs-on: ${{ matrix.config.os }}
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout repository
@@ -36,10 +32,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.config.node_version }}
+          node-version: ${{ matrix.node_version }}
 
       - name: Install dependencies (Windows only)
-        if: startsWith(matrix.config.os, 'windows')
+        if: startsWith(matrix.os, 'windows')
         run: |
           choco install visualstudio2017-workload-vctools -y
           npm config set msvs_version 2017
