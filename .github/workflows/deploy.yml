@@ -63,7 +63,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          artifacts: "prebuilds/*.zip"
+          artifacts: "prebuilds/${{ env.ARCHIVE_NAME }}"
           draft: false
           prerelease: true
           token: ${{ secrets.PREBUILD_GITHUB_TOKEN }}
