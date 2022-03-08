@@ -2,9 +2,9 @@ name: Build and Test
 
 on:
   push:
-    branches: [master]
+    branches: [latest]
   pull_request:
-    branches: [master]
+    branches: [latest]
   workflow_dispatch:
     inputs:
       debug_enabled:
