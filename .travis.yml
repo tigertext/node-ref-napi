@@ -40,7 +40,7 @@ jobs:
         env: CXX=clang++
 
 install:
-  - npm install --build-from-source
+  - npm install --build-from-source --no-package-lock
 
 after_success:
   - npm install coveralls

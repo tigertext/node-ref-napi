@@ -1,0 +1,58 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      debug_enabled:
+        description: 'Run the build with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)'
+        required: false
+        default: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    strategy:
+      matrix:
+        config: [
+          {
+            os: windows-latest,
+            node_version: [10, 12, 14, 16]
+          },
+        ]
+
+    runs-on: ${{ matrix.config.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.config.node_version }}
+
+      - name: Install dependencies (Windows only)
+        if: startsWith(matrix.config.os, 'windows')
+        run: |
+          choco install visualstudio2017-workload-vctools -y
+          npm config set msvs_version 2017
+
+      - name: Setup debugging session with tmate
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
+        with:
+          limit-access-to-actor: true
+          sudo: false
+
+      - name: Install npm packages
+        run: npm install --build-from-source --no-package-lock
+
+      - name: Test
+        run: npm run test
