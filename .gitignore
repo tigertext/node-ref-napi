@@ -17,5 +17,6 @@ npm-debug.log
 coverage
 build
 node-addon-api
+.vscode/
 
 prebuilds/
